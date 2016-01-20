@@ -28,50 +28,75 @@ import com.googlecode.flyway.core.Flyway;
 
 public class DbHelper {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(DbHelper.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(DbHelper.class);
 
-  private static final DbHelper INSTANCE = new DbHelper();
+	private static final DbHelper INSTANCE = new DbHelper();
 
-  public static Connection getConnection() throws SQLException {
-    return DbHelper.getInstance().getDataSource().getConnection();
-  }
+	public static Connection getConnection() throws SQLException {
+		return DbHelper.getInstance().getDataSource().getConnection();
+	}
 
-  public static DbHelper getInstance() {
-    return DbHelper.INSTANCE;
-  }
+	public static DbHelper getInstance() {
+		return DbHelper.INSTANCE;
+	}
 
-  private BasicDataSource ds;
+	private BasicDataSource ds;
 
-  private DbHelper() {
-  }
+	private DbHelper() {
+	}
 
-  public void close() {
-    if (ds != null) {
-      DbHelper.LOGGER.debug("Closing the data source");
-      try {
-        ds.close();
-      } catch (final SQLException e) {
-        DbHelper.LOGGER.error("Failed to close the data source", e);
-      }
-    }
-  }
+	public void close() {
+		if (ds != null) {
+			DbHelper.LOGGER.debug("Closing the data source");
+			try {
+				ds.close();
+			} catch (final SQLException e) {
+				DbHelper.LOGGER.error("Failed to close the data source", e);
+			}
+		}
+	}
 
-  public DataSource getDataSource() {
-    return ds;
-  }
+	public DataSource getDataSource() {
+		return ds;
+	}
 
-  public void init() {
-    DbHelper.LOGGER.debug("Creating the data source");
-    ds = new BasicDataSource();
-    ds.setDriverClassName("org.h2.Driver");
-    ds.setUrl("jdbc:h2:target/db");
-    ds.setUsername("sa");
-    ds.setPassword("");
+	public void init() {
+		DbHelper.LOGGER.debug("Creating the data source");
+		ds = new BasicDataSource();
+		
+		/* H2 
+		ds.setDriverClassName("org.h2.Driver");
+		ds.setUrl("jdbc:h2:target/db");
+		ds.setUsername("sa");
+		ds.setPassword("");
+		*/
+		/* MySQL */
+		ds.setDriverClassName("com.mysql.jdbc.Driver");
+		ds.setUsername("newuser");
+		ds.setPassword("Passw0rd");
+		ds.setUrl("jdbc:mysql://localhost:3306/sampledb");
+		
 
-    DbHelper.LOGGER.debug("Executing Flyway (database migration)");
-    final Flyway flyway = new Flyway();
-    flyway.setDataSource(ds);
-    flyway.migrate();
-  }
+		DbHelper.LOGGER.debug("Call the flyway object instance and set the datasource.");
+		final Flyway flyway = new Flyway();
+		flyway.setDataSource(ds);
+		
+//		DbHelper.LOGGER.debug("Clean the database schema before migration.");
+//		flyway.clean();
+		
+		DbHelper.LOGGER.debug("Executing Flyway (database migration)");
+		flyway.migrate();
+	}
+	
+	public void registerShutdownHook() {
+	    Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+	      @Override
+	      public void run() {
+	        close();
+	      }
+	    }));
+	  }
+
 
 }

@@ -39,7 +39,7 @@ public class ContactTest {
 
     try (Connection connection = DbHelper.getConnection(); Statement stmt = connection.createStatement()) {
       stmt.execute("TRUNCATE TABLE contacts");
-      stmt.execute("ALTER TABLE contacts ALTER COLUMN id RESTART WITH 1");
+      //stmt.execute("ALTER TABLE contacts ALTER COLUMN id RESTART WITH 1");
     }
   }
 

@@ -14,9 +14,7 @@
  * under the License.
  */
 package com.endegraaf.examples.app;
-
-import java.sql.SQLException;
-import java.util.List;
+import javax.swing.SwingUtilities;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,24 +25,28 @@ public class Main {
 
   public static void main(final String[] args) {
     DbHelper.getInstance().init();
+    DbHelper.getInstance().registerShutdownHook();
 
-    try {
-      final Contact c = new Contact();
-      c.setName("Albert Attard");
-      c.setContacts("albert@javacreed.com");
-      c.save();
+    SwingUtilities.invokeLater(new Runnable() {
+      @Override
+      public void run() {
+        Main.LOGGER.debug("Starting application");
 
-      // Use the ContactsHelper class
-      List<Contact> contacts = ContactsHelper.getInstance().getContacts();
-      for(Contact contact : contacts){
-    	  Main.LOGGER.debug(">> [{}] {} ({})", contact.getId(), contact.getName(), contact.getContacts());
+        final Application app = new Application();
+        app.setTitle("Simple Java Database Swing Application");
+        app.setSize(800, 600);
+        app.setLocationRelativeTo(null);
+        app.setDefaultCloseOperation(Application.EXIT_ON_CLOSE);
+        app.setVisible(true);
+
+        // app.addWindowListener(new WindowAdapter() {
+        // @Override
+        // public void windowClosing(WindowEvent e) {
+        // Main.LOGGER.info("Done");
+        // DbHelper.getInstance().close();
+        // }
+        // });
       }
-      
-    } catch (final SQLException e) {
-      Main.LOGGER.error("Failed to save the contact", e);
-    }
-
-    DbHelper.getInstance().close();
-    Main.LOGGER.info("Done");
+    });
   }
 }
