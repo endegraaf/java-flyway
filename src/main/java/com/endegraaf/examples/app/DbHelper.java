@@ -75,7 +75,7 @@ public class DbHelper {
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
 		ds.setUsername("newuser");
 		ds.setPassword("Passw0rd");
-		ds.setUrl("jdbc:mysql://localhost:3306/sampledb");
+		ds.setUrl("jdbc:mysql://192.168.0.20:3306/sampledb");
 		
 
 		DbHelper.LOGGER.debug("Call the flyway object instance and set the datasource.");
