@@ -67,9 +67,6 @@ public class DbHelper {
 
 		DbHelper.LOGGER.debug("Loading properties");
 		final Properties properties = new Properties();
-		// properties.put("db.path", "target/db");
-		// properties.put("db.username", "sa");
-		// properties.put("db.password", "");
 		try {
 			properties.load(getClass().getResourceAsStream("/app.properties"));
 		} catch (final IOException e) {
@@ -83,24 +80,15 @@ public class DbHelper {
 		ds.setUsername(properties.getProperty("db.username"));
 		ds.setPassword(properties.getProperty("db.password"));
 		/*
+		 ** for local development. 
 		 * H2 ds.setDriverClassName("org.h2.Driver");
 		 * ds.setUrl("jdbc:h2:target/db"); ds.setUsername("sa");
 		 * ds.setPassword("");
 		 */
-		/*
-		 * MySQL ds.setDriverClassName("com.mysql.jdbc.Driver");
-		 * ds.setUsername("newuser"); ds.setPassword("Passw0rd");
-		 * //ds.setUrl("jdbc:mysql://localhost:3306/sampledb");
-		 * //ds.setUrl("jdbc:mysql://192.168.0.20:3306/sampledb");
-		 * ds.setUrl("jdbc:mysql://braam.endegraaf.nl:3306/sampledb");
-		 */
-		DbHelper.LOGGER
-				.debug("Call the flyway object instance and set the datasource.");
+		
+		DbHelper.LOGGER.debug("Call the flyway object instance and set the datasource.");
 		final Flyway flyway = new Flyway();
 		flyway.setDataSource(ds);
-
-		// DbHelper.LOGGER.debug("Clean the database schema before migration.");
-		// flyway.clean();
 
 		DbHelper.LOGGER.debug("Executing Flyway (database migration)");
 		flyway.migrate();
