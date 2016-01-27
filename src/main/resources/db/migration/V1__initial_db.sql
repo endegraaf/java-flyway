@@ -14,6 +14,8 @@ CREATE SCHEMA IF NOT EXISTS `sampledb` COLLATE utf8_general_ci ;
 /* 
 	Create the contacts table  
 */
+DROP TABLE IF EXISTS contacts;
+
 CREATE TABLE contacts (
   id bigint auto_increment NOT NULL, 
   name varchar(128) NOT NULL,

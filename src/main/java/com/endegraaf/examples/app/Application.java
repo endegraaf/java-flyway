@@ -36,6 +36,7 @@ public class Application extends JFrame {
 	private JTextField idTextField;
 	private JTextField nameTextField;
 	private JTextArea contactsTextArea;
+	private JTextArea remarksTextArea;
 
 	private DefaultListModel<Contact> contactsListModel;
 	private JList<Contact> contactsList;
@@ -99,13 +100,33 @@ public class Application extends JFrame {
 		constraints = new GridBagConstraints();
 		constraints.gridx = 1;
 		constraints.gridy = 2;
-		constraints.weightx = 1;
-		constraints.weighty = 1;
+		//constraints.weightx = 1;
+		//constraints.weighty = 1;
 		constraints.insets = new Insets(2, 2, 2, 2);
 		constraints.fill = GridBagConstraints.BOTH;
 		contactsTextArea = new JTextArea();
 		panel.add(new JScrollPane(contactsTextArea), constraints);
 
+		
+		// Remarks - EdG 2016-01-27
+		constraints = new GridBagConstraints();
+		constraints.gridy = 3;
+		constraints.anchor = GridBagConstraints.NORTHWEST;
+		constraints.insets = new Insets(2, 2, 2, 2);
+		panel.add(new JLabel("Remarks"), constraints);
+
+		constraints = new GridBagConstraints();
+		constraints.gridx = 1;
+		constraints.gridy = 3;
+		//constraints.weightx = 1;
+		//constraints.weighty = 1;
+		constraints.insets = new Insets(2, 2, 2, 3);
+		constraints.fill = GridBagConstraints.BOTH;
+		remarksTextArea = new JTextArea();
+		panel.add(new JScrollPane(remarksTextArea), constraints);
+
+		
+		
 		return panel;
 	}
 
@@ -260,6 +281,7 @@ public class Application extends JFrame {
 			try {
 				selected.setName(nameTextField.getText());
 				selected.setContacts(contactsTextArea.getText());
+				selected.setRemarks(remarksTextArea.getText());
 				selected.save();
 			} catch (final SQLException e) {
 				JOptionPane.showMessageDialog(this,
@@ -277,10 +299,12 @@ public class Application extends JFrame {
 			idTextField.setText("");
 			nameTextField.setText("");
 			contactsTextArea.setText("");
+			remarksTextArea.setText("");
 		} else {
 			idTextField.setText(String.valueOf(selected.getId()));
 			nameTextField.setText(selected.getName());
 			contactsTextArea.setText(selected.getContacts());
+			remarksTextArea.setText(selected.getRemarks());
 		}
 	}
 

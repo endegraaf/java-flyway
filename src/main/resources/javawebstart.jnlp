@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+" codebase="http://www.endegraaf.nl" href="javawebstart.jnlp">
+	<information>
+		<title>Demo</title>
+		<vendor>Eric de Graaf</vendor>
+		<description>Demo applicatie</description>
+	</information>
+	<resources>
+	<j2ee version="7.0+"/>
+	<jar href="ContactsBook.jar"></jar>
+	</resources>
+
+<application-desc main-class="Main"></application-desc>
+</jnlp>

@@ -80,15 +80,18 @@ public class DbHelper {
 		ds.setUsername(properties.getProperty("db.username"));
 		ds.setPassword(properties.getProperty("db.password"));
 		/*
-		 ** for local development. 
 		 * H2 ds.setDriverClassName("org.h2.Driver");
 		 * ds.setUrl("jdbc:h2:target/db"); ds.setUsername("sa");
 		 * ds.setPassword("");
 		 */
 		
 		DbHelper.LOGGER.debug("Call the flyway object instance and set the datasource.");
+		
 		final Flyway flyway = new Flyway();
 		flyway.setDataSource(ds);
+
+		//DbHelper.LOGGER.debug("Clean the database schema before migration.");
+		flyway.clean();
 
 		DbHelper.LOGGER.debug("Executing Flyway (database migration)");
 		flyway.migrate();

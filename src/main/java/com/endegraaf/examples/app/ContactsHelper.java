@@ -35,6 +35,7 @@ public class ContactsHelper {
 				contact.setId(rs.getLong("id"));
 				contact.setName(rs.getString("name"));
 				contact.setContacts(rs.getString("contacts"));
+				contact.setRemarks(rs.getString("remarks"));
 				contacts.add(contact);
 			}
 		}
