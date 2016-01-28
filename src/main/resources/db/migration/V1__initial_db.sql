@@ -2,7 +2,7 @@
 	Set the initial state: remove existing
 	
 	from the CLI:
-	flyway -baselineOnMigrate=true -url=jdbc:mysql://localhost/ -schemas=sampledb -user=newuser -password=Passw0rd migrate
+	flyway -baselineOnMigrate=true -url=jdbc:mysql://localhost/ -schemas=<db> -user=<user> -password=<pass> migrate
 	
 	extra possible argument: -locations=filesystem:/path/to/scrips/
 	
