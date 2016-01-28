@@ -91,7 +91,7 @@ public class DbHelper {
 		flyway.setDataSource(ds);
 
 		//DbHelper.LOGGER.debug("Clean the database schema before migration.");
-		flyway.clean();
+		//flyway.clean();
 
 		DbHelper.LOGGER.debug("Executing Flyway (database migration)");
 		flyway.migrate();
