@@ -142,11 +142,11 @@ public class Contact {
 		}
 		
 // Enable this feature would break the GUI test
-//		if (remarks == null) {
-//			formatted.append("no remarks");
-//		} else {
-//			formatted.append(remarks);
-//		}
+		if (remarks == null) {
+			formatted.append("no remarks");
+		} else {
+			formatted.append(remarks);
+		}
 
 		return formatted.toString();
 	}
